@@ -20,8 +20,18 @@ class WordsMemModel{
     }
 
     patchWords = async (id, data) =>{
-        const update = await this.model.patchWords(id, data)
-        return update
+       
+       try {
+        const index = this.words.findIndex((e)=> e.id == id)
+        if(index == -1) throw new Error ("el inidice no existe")
+
+        const obj = {...this.words[index], ...[data]} 
+        this.words.splice(index, 1, obj)
+        return obj
+       } catch (error) {
+            console.error("ha ocurrido un error")
+       }
+     
     }
 
 }
